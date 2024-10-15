@@ -44,7 +44,7 @@ def signup():
         user.save()
         login_user(user)
         return redirect(url_for('profile'))
-    return render_template('/signup.html',  user=current_user)
+    return render_template('signup.html',  user=current_user)
 
 # Login route
 @app.route('/login', methods=['GET', 'POST'])
@@ -75,6 +75,16 @@ class JobPost(Document):
 # Job listings route
 @app.route('/jobs')
 def job_listings():
+    post_job =JobPost (
+    title = "Junior Dev",
+    company = "Limpopo Connexion",
+    location = "Johannesburg",
+    category = "Technical",
+    description = "Assist Teams with developing softwares and mobile apps",
+    salary = ('5000')
+
+    )
+    post_job.save()
     location = request.args.get('location')
     category = request.args.get('category')
 
@@ -125,6 +135,14 @@ class UserCourseProgress(Document):
 # Courses route
 @app.route('/courses')
 def courses():
+    #creating Courses document
+    course = Course(
+        title="Software Engineer- Front-end",
+        description="This course provides you with the knowledge and expose you to tools you can use to develop websites effectively.",
+        duration=5
+    )
+    course.save()
+
     courses = Course.objects()
     return render_template('courses.html', courses=courses, user=current_user)
 
